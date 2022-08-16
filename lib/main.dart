@@ -1,115 +1,219 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get_navigation/get_navigation.dart';
+import 'package:google_fonts/google_fonts.dart';
 
-void main() {
-  runApp(const MyApp());
+void main(List<String> args) {
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.blue,
+    SystemChrome.setPreferredOrientations(
+        [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+    return ScreenUtilInit(
+      builder: (context, child) => GetMaterialApp(
+        title: 'FLutter Demo',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+          textTheme: GoogleFonts.nunitoTextTheme(
+            Theme.of(context).textTheme,
+          ),
+        ),
+        home: HomePage(),
+        debugShowCheckedModeBanner: false,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      designSize: Size(360, 640),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
+class HomePage extends StatelessWidget {
+  final purpleColor = Color(0xff6688FF);
+  final darkTextColor = Color(0xff1F1A3D);
+  final lightTextColor = Color(0xff999999);
+  final textFieldColor = Color(0xffF5F6FA);
+  final borderColor = Color(0xffD9D9D9);
 
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
+  Widget getTextField({required String hint}) {
+    return TextField(
+      decoration: InputDecoration(
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8.r),
+          borderSide: BorderSide(color: Colors.transparent, width: 0),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8.r),
+          borderSide: BorderSide(color: Colors.transparent, width: 0),
+        ),
+        contentPadding: EdgeInsets.symmetric(
+          horizontal: 16.w,
+          vertical: 14.h,
+        ),
+        filled: true,
+        fillColor: textFieldColor,
+        hintText: hint,
+        hintStyle: TextStyle(
+          fontSize: 14.sp,
+          fontWeight: FontWeight.w400,
+        ),
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
     return Scaffold(
-      appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Invoke "debug painting" (press "p" in the console, choose the
-          // "Toggle Debug Paint" action from the Flutter Inspector in Android
-          // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-          // to see the wireframe for each widget.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
+      body: SafeArea(
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 24.w),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(
+                height: 52.h,
+              ),
+              Text(
+                "Sign Up to Tokiped",
+                style: TextStyle(
+                  fontSize: 18.sp,
+                  fontWeight: FontWeight.w700,
+                  color: darkTextColor,
+                ),
+              ),
+              SizedBox(height: 4.h),
+              Wrap(
+                children: [
+                  Text(
+                    "Already have an account? ",
+                    style: TextStyle(
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.w600,
+                      color: lightTextColor,
+                    ),
+                  ),
+                  Text(
+                    "Login",
+                    style: TextStyle(
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.w600,
+                      color: purpleColor,
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 24.h),
+              getTextField(hint: "Full Name"),
+              SizedBox(height: 16.h),
+              getTextField(hint: "Email"),
+              SizedBox(height: 16.h),
+              getTextField(hint: "Password"),
+              SizedBox(height: 16.h),
+              getTextField(hint: "Confirm password"),
+              SizedBox(height: 16.h),
+              SizedBox(
+                width: double.infinity,
+                child: TextButton(
+                  onPressed: () {},
+                  child: Text(
+                    "Create Account",
+                    // style: TextStyle(color: Colors.white),
+                  ),
+                  style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(purpleColor),
+                      foregroundColor: MaterialStateProperty.all(Colors.white),
+                      padding: MaterialStateProperty.all(
+                        EdgeInsets.symmetric(vertical: 14.h),
+                      ),
+                      textStyle: MaterialStateProperty.all(TextStyle(
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.w700,
+                      ))),
+                ),
+              ),
+              SizedBox(
+                height: 16.h,
+              ),
+              Row(
+                children: [
+                  Expanded(child: Divider()),
+                  SizedBox(width: 16.w),
+                  Text(
+                    "Or Sign up via",
+                    style: TextStyle(
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.w500,
+                      color: lightTextColor,
+                    ),
+                  ),
+                  SizedBox(width: 16.w),
+                  Expanded(child: Divider()),
+                ],
+              ),
+              SizedBox(
+                height: 16.h,
+              ),
+              SizedBox(
+                width: double.infinity,
+                child: TextButton(
+                  onPressed: () {},
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Image.asset(
+                        "assets/google.png",
+                        height: 14.h,
+                      ),
+                      SizedBox(
+                        width: 10.w,
+                      ),
+                      Text("Google"),
+                    ],
+                  ),
+                  style: ButtonStyle(
+                      side: MaterialStateProperty.all(BorderSide(
+                        color: borderColor,
+                      )),
+                      foregroundColor: MaterialStateProperty.all(darkTextColor),
+                      padding: MaterialStateProperty.all(
+                          EdgeInsets.symmetric(vertical: 14.h)),
+                      textStyle: MaterialStateProperty.all(
+                        TextStyle(
+                          fontSize: 14.sp,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      )),
+                ),
+              ),
+              SizedBox(height: 16.h),
+              Wrap(
+                children: [
+                  Text(
+                    "By signing up to Tokiped you agree to our ",
+                    style: TextStyle(
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.w500,
+                      color: lightTextColor,
+                    ),
+                  ),
+                  Text(
+                    "terms and conditions",
+                    style: TextStyle(
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.w500,
+                      color: purpleColor,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
